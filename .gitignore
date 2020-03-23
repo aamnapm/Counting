@@ -1,0 +1,16 @@
+/.idea/
+
+/FirstLesson.iml
+*/target/**
+ *.iml
+
+
+
+
+**/target
+**/*.iml
+
+**/logs
+**/*.log
+/logs/**
+.DS_Store
