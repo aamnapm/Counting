@@ -1,15 +1,27 @@
 package com.aamnapm.counting.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "profile")
-public class Profile extends BaseEntity{
+@AttributeOverrides({
+        @AttributeOverride(name = "uuid", column = @Column(name = "uuid"))
+})
+public class Profile extends BaseEntity {
 
+    @Column(name = "age", unique = false)
     private int age;
+
+    @Column(name = "name", unique = false)
     private String name;
+
+    @Column(name = "family", unique = false)
     private String family;
+
+    @Column(name = "national_ode", unique = true)
+    @NotEmpty(message = "nationalCode must be required and unique")
     private String nationalCode;
 
     public int getAge() {
@@ -43,4 +55,6 @@ public class Profile extends BaseEntity{
     public void setNationalCode(String nationalCode) {
         this.nationalCode = nationalCode;
     }
+
+
 }

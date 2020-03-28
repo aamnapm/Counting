@@ -1,5 +1,6 @@
 package com.aamnapm.counting.service;
 
+import com.aamnapm.counting.dto.ResponseApi;
 import com.aamnapm.counting.model.Profile;
 import com.aamnapm.counting.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public UUID save(Profile profile) {
+    public ResponseApi save(Profile profile) {
 
         Profile profileSaved = null;
         Optional<Profile> byNationalCode = profileRepository.findByName(profile.getNationalCode());
@@ -29,7 +30,13 @@ public class ProfileServiceImpl implements ProfileService {
         } else {
             profileSaved = profileRepository.save(profile);
         }
-        return profileSaved.getId();
+
+        ResponseApi responseApi = new ResponseApi();
+        responseApi.setMessage("User save success.");
+        responseApi.setResult(profileSaved.getId());
+        responseApi.setStatus(true);
+
+        return responseApi;
     }
 
     @Override
