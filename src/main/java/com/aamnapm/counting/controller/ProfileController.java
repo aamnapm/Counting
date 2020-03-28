@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.HttpURLConnection;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -26,20 +27,32 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+    @GetMapping("/getAll")
+    ResponseEntity<List<ProfileDTO>> getAll() {
+        List<ProfileDTO> profileDTOList = profileMapper.toProfilesDTO(profileService.getAll());
+        return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(profileDTOList);
+    }
+
+    @GetMapping("/get/{id}")
+    ResponseEntity<ProfileDTO> getAll(@PathVariable("id") UUID uuid) {
+        ProfileDTO profileDTOList = profileMapper.convertToProfileDTO(profileService.get(uuid));
+        return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(profileDTOList);
+    }
+
     @PostMapping("/save")
     ResponseEntity<ResponseApi> save(@RequestBody @Valid ProfileDTO profileDTO) {
         ResponseApi responseApi = profileService.save(profileMapper.convertToProfile(profileDTO));
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(responseApi);
     }
 
-    @PutMapping("/update")
-    ResponseEntity<Void> update(ProfileDTO profileDTO, UUID uuid) {
+    @PutMapping("/update/{id}")
+    ResponseEntity update(@RequestBody @Valid ProfileDTO profileDTO, @PathVariable("id") UUID uuid) {
         profileService.update(profileMapper.convertToProfile(profileDTO), uuid);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    ResponseEntity<Void> delete(UUID uuid) {
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<Void> delete(@PathVariable("id") UUID uuid) {
         profileService.delete(uuid);
         return new ResponseEntity(HttpStatus.OK);
     }

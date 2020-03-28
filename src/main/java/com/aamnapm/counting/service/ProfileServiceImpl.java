@@ -6,6 +6,8 @@ import com.aamnapm.counting.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,6 +51,7 @@ public class ProfileServiceImpl implements ProfileService {
             profileBySearch.setName(profile.getName());
             profileBySearch.setFamily(profile.getFamily());
             profileBySearch.setNationalCode(profile.getNationalCode());
+            profileRepository.save(profileBySearch);
         } else {
             System.out.printf("User is not available");
         }
@@ -61,6 +64,29 @@ public class ProfileServiceImpl implements ProfileService {
             profileRepository.deleteById(uuid);
         } else {
             System.out.printf("User is not available");
+        }
+    }
+
+    @Override
+    public List<Profile> getAll() {
+        List<Profile> all = new ArrayList<>();
+        try {
+            all = profileRepository.findAll();
+        } catch (Exception e) {
+            System.out.println("error e " + e.getMessage());
+        }
+        return all;
+    }
+
+    @Override
+    public Profile get(UUID uuid) {
+        Optional<Profile> byId = profileRepository.findById(uuid);
+
+        if (byId.isPresent()) {
+            return byId.get();
+        } else {
+            System.out.println("user not found");
+            return null;
         }
     }
 }

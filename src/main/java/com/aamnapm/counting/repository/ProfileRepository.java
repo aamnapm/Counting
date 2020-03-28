@@ -2,13 +2,14 @@ package com.aamnapm.counting.repository;
 
 import com.aamnapm.counting.model.Profile;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Transactional
+//@Transactional
 public interface ProfileRepository extends PagingAndSortingRepository<Profile, UUID> {
 
     Optional<Profile> findById(UUID uuid);
@@ -23,4 +24,7 @@ public interface ProfileRepository extends PagingAndSortingRepository<Profile, U
 
     void deleteById(UUID uuid);
 
+
+//    @Override
+//    void deleteById(UUID uuid);
 }
