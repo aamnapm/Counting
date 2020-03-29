@@ -5,11 +5,12 @@ import com.aamnapm.counting.dto.ResponseApi;
 import com.aamnapm.counting.model.Record;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface RecordService {
 
-    ResponseApi save(Record record);
+    ResponseApi save(Record record, UUID profileId);
 
     void update(Record record, UUID uuid);
 
@@ -18,5 +19,7 @@ public interface RecordService {
     List<Record> getAll();
 
     Record get(UUID uuid);
+
+    Set<Record> getRecords(UUID uuid);
 
 }

@@ -6,16 +6,19 @@ import java.util.UUID;
 
 public class RecordDTO {
 
-    @ApiModelProperty(required = false,hidden = true)
+    @ApiModelProperty(required = false, hidden = true)
     private UUID uuid;
 
-    @ApiModelProperty(required = false,hidden = false)
+    @ApiModelProperty(required = false, hidden = true)
+    private UUID profileId;
+
+    @ApiModelProperty(required = false, hidden = false)
     private Integer type;
 
-    @ApiModelProperty(required = false,hidden = false)
+    @ApiModelProperty(required = false, hidden = false)
     private String title;
 
-    @ApiModelProperty(required = false,hidden = false)
+    @ApiModelProperty(required = false, hidden = false)
     private String price;
 
     public UUID getUuid() {
@@ -48,5 +51,13 @@ public class RecordDTO {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public UUID getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(UUID profileId) {
+        this.profileId = profileId;
     }
 }

@@ -1,7 +1,9 @@
 package com.aamnapm.counting.dto;
 
+import com.aamnapm.counting.model.Record;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ProfileDTO {
@@ -20,6 +22,9 @@ public class ProfileDTO {
 
     @ApiModelProperty(required = false, hidden = false)
     private String nationalCode;
+
+    @ApiModelProperty(required = false, hidden = false)
+    private List<Record> records;
 
 
     public UUID getUuid() {

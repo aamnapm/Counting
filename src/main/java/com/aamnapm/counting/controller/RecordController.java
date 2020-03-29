@@ -34,14 +34,20 @@ public class RecordController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<RecordDTO> getById(@PathVariable("id") UUID uuid) {
+    ResponseEntity<RecordDTO> getByRecordId(@PathVariable("id") UUID uuid) {
         RecordDTO recordDTO = recordMapper.convertToRecordDTO(recordService.get(uuid));
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(recordDTO);
     }
 
-    @PostMapping
-    ResponseEntity<ResponseApi> save(@RequestBody @Valid RecordDTO recordDTO) {
-        ResponseApi responseApi = recordService.save(recordMapper.convertToRecord(recordDTO));
+    @GetMapping("/profileProfile")
+    ResponseEntity<List<RecordDTO>> getProfileRecords(@RequestHeader("profileId") UUID id) {
+        List<RecordDTO> recordDTO = recordMapper.toRecordsDTO(recordService.getRecords(id));
+        return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(recordDTO);
+    }
+
+    @PostMapping()
+    ResponseEntity<ResponseApi> save(@RequestBody @Valid RecordDTO recordDTO, @RequestHeader("profileId") UUID id) {
+        ResponseApi responseApi = recordService.save(recordMapper.convertToRecord(recordDTO), id);
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(responseApi);
     }
 
