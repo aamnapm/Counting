@@ -3,6 +3,7 @@ package com.aamnapm.counting.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @Entity
 @Table(name = "profile")
@@ -23,6 +24,9 @@ public class Profile extends BaseEntity {
     @Column(name = "national_ode", unique = true)
     @NotEmpty(message = "nationalCode must be required and unique")
     private String nationalCode;
+
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Record> records;
 
     public int getAge() {
         return age;
@@ -56,5 +60,11 @@ public class Profile extends BaseEntity {
         this.nationalCode = nationalCode;
     }
 
+    public Set<Record> getRecords() {
+        return records;
+    }
 
+    public void setRecords(Set<Record> records) {
+        this.records = records;
+    }
 }

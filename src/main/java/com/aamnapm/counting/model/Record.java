@@ -19,6 +19,18 @@ public class Record extends BaseEntity {
     @Column(name = "type", unique = false)
     private WithdrawDeposit type;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "profile_id", nullable = false)
+    private Profile profile;
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
     public String getTitle() {
         return title;
     }
