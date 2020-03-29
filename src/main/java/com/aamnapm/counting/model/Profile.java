@@ -25,7 +25,7 @@ public class Profile extends BaseEntity {
     @NotEmpty(message = "nationalCode must be required and unique")
     private String nationalCode;
 
-    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Record> records;
 
     public int getAge() {
