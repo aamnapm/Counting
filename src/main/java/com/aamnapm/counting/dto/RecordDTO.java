@@ -1,12 +1,30 @@
 package com.aamnapm.counting.dto;
 
-import com.aamnapm.counting.model.WithdrawDeposit;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.UUID;
 
 public class RecordDTO {
 
+    @ApiModelProperty(required = false,hidden = true)
+    private UUID uuid;
+
+    @ApiModelProperty(required = false,hidden = false)
+    private Integer type;
+
+    @ApiModelProperty(required = false,hidden = false)
     private String title;
+
+    @ApiModelProperty(required = false,hidden = false)
     private String price;
-    private WithdrawDeposit type;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public String getTitle() {
         return title;
@@ -24,11 +42,11 @@ public class RecordDTO {
         this.price = price;
     }
 
-    public WithdrawDeposit getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(WithdrawDeposit type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 }

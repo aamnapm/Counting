@@ -1,11 +1,34 @@
 package com.aamnapm.counting.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.UUID;
+
 public class ProfileDTO {
 
+    @ApiModelProperty(required = false, hidden = true)
+    private UUID uuid;
+
+    @ApiModelProperty(required = false, hidden = false)
     private int age;
+
+    @ApiModelProperty(required = false, hidden = false)
     private String name;
+
+    @ApiModelProperty(required = false, hidden = false)
     private String family;
+
+    @ApiModelProperty(required = false, hidden = false)
     private String nationalCode;
+
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public String getNationalCode() {
         return nationalCode;

@@ -1,8 +1,6 @@
 package com.aamnapm.counting.mapper;
 
-import com.aamnapm.counting.dto.ProfileDTO;
 import com.aamnapm.counting.dto.RecordDTO;
-import com.aamnapm.counting.model.Profile;
 import com.aamnapm.counting.model.Record;
 import com.aamnapm.counting.model.WithdrawDeposit;
 import org.mapstruct.Mapper;
@@ -14,19 +12,21 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface RecordMapper {
 
-    @Mapping(target = "title", source = "title")
-    @Mapping(target = "price", source = "price")
-    @Mapping(target = "type", source = "type", qualifiedByName = "convertIntToType")
-    Record convertToRecord(RecordDTO recordDTO);
-
-
+    @Mapping(target = "id", source = "uuid")
     @Mapping(target = "title", source = "title")
     @Mapping(target = "price", source = "price")
     @Mapping(target = "type", source = "type", qualifiedByName = "convertTypeToInt")
+    Record convertToRecord(RecordDTO recordDTO);
+
+
+    @Mapping(target = "uuid", source = "id")
+    @Mapping(target = "title", source = "title")
+    @Mapping(target = "price", source = "price")
+    @Mapping(target = "type", source = "type", qualifiedByName = "convertIntToType")
     RecordDTO convertToRecordDTO(Record record);
 
 
-    List<ProfileDTO> toRecordsDTO(List<Profile> userList);
+    List<RecordDTO> toRecordsDTO(List<Record> userList);
 
 
     @Named("convertIntToType")

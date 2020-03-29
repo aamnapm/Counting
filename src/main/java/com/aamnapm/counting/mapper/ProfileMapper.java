@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ProfileMapper {
 
+    @Mapping(target = "id", source = "uuid")
     @Mapping(target = "age", source = "age")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "family", source = "family")
@@ -16,6 +17,7 @@ public interface ProfileMapper {
     public Profile convertToProfile(ProfileDTO profileDto);
 
 
+    @Mapping(target = "uuid", source = "id")
     @Mapping(target = "age", source = "age")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "family", source = "family")

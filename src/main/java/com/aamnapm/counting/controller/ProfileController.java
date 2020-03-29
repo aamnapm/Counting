@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.UUID;
 
 
-@RestController("/profile")
+@RestController
+@RequestMapping("/profile")
 public class ProfileController {
 
     private ProfileMapper profileMapper;
@@ -27,31 +28,31 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     ResponseEntity<List<ProfileDTO>> getAll() {
         List<ProfileDTO> profileDTOList = profileMapper.toProfilesDTO(profileService.getAll());
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(profileDTOList);
     }
 
-    @GetMapping("/get/{id}")
-    ResponseEntity<ProfileDTO> getAll(@PathVariable("id") UUID uuid) {
+    @GetMapping("/{id}")
+    ResponseEntity<ProfileDTO> getByID(@PathVariable("id") UUID uuid) {
         ProfileDTO profileDTOList = profileMapper.convertToProfileDTO(profileService.get(uuid));
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(profileDTOList);
     }
 
-    @PostMapping("/save")
+    @PostMapping
     ResponseEntity<ResponseApi> save(@RequestBody @Valid ProfileDTO profileDTO) {
         ResponseApi responseApi = profileService.save(profileMapper.convertToProfile(profileDTO));
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(responseApi);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     ResponseEntity update(@RequestBody @Valid ProfileDTO profileDTO, @PathVariable("id") UUID uuid) {
         profileService.update(profileMapper.convertToProfile(profileDTO), uuid);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable("id") UUID uuid) {
         profileService.delete(uuid);
         return new ResponseEntity(HttpStatus.OK);
