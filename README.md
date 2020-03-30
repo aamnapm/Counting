@@ -5,3 +5,4 @@
 - Mapstruct 
 - Swagger
 - PostgreSQL
+- OneToMany
