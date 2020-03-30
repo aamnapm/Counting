@@ -1,12 +1,14 @@
 package com.aamnapm.counting.service;
 
 import com.aamnapm.counting.dto.ResponseApi;
+import com.aamnapm.counting.exeption.ConflictException;
+import com.aamnapm.counting.exeption.NotFoundException;
+import com.aamnapm.counting.exeption.RunTimeException;
 import com.aamnapm.counting.model.Profile;
 import com.aamnapm.counting.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,22 +25,22 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ResponseApi save(Profile profile) {
-
-        Profile profileSaved = null;
         Optional<Profile> byNationalCode = profileRepository.findByName(profile.getNationalCode());
 
         if (byNationalCode.isPresent()) {
-            System.out.printf("User is available");
+            throw new ConflictException("User already exist");
         } else {
-            profileSaved = profileRepository.save(profile);
+            try {
+                Profile profileSaved = profileRepository.save(profile);
+                ResponseApi responseApi = new ResponseApi();
+                responseApi.setMessage("User save success.");
+                responseApi.setResult(profileSaved.getId());
+                responseApi.setStatus(true);
+                return responseApi;
+            } catch (Exception e) {
+                throw new RunTimeException(e.getMessage());
+            }
         }
-
-        ResponseApi responseApi = new ResponseApi();
-        responseApi.setMessage("User save success.");
-        responseApi.setResult(profileSaved.getId());
-        responseApi.setStatus(true);
-
-        return responseApi;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class ProfileServiceImpl implements ProfileService {
             profileBySearch.setNationalCode(profile.getNationalCode());
             profileRepository.save(profileBySearch);
         } else {
-            System.out.printf("User is not available");
+            throw new NotFoundException("Profile dose'nt exist");
         }
     }
 
@@ -61,21 +63,23 @@ public class ProfileServiceImpl implements ProfileService {
     public void delete(UUID uuid) {
         Optional<Profile> byId = profileRepository.findById(uuid);
         if (byId.isPresent()) {
-            profileRepository.deleteById(uuid);
+            try {
+                profileRepository.deleteById(uuid);
+            } catch (Exception e) {
+                throw new RunTimeException(e.getMessage());
+            }
         } else {
-            System.out.printf("User is not available");
+            throw new NotFoundException("Profile dose'nt exist");
         }
     }
 
     @Override
     public List<Profile> getAll() {
-        List<Profile> all = new ArrayList<>();
         try {
-            all = profileRepository.findAll();
+            return profileRepository.findAll();
         } catch (Exception e) {
-            System.out.println("error e " + e.getMessage());
+            throw new RunTimeException(e.getMessage());
         }
-        return all;
     }
 
     @Override
@@ -85,8 +89,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (byId.isPresent()) {
             return byId.get();
         } else {
-            System.out.println("user not found");
-            return null;
+            throw new NotFoundException("Profile dose'nt exist");
         }
     }
 }
