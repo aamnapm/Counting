@@ -6,3 +6,4 @@
 - Swagger
 - PostgreSQL
 - OneToMany
+- ExceptionHandling
