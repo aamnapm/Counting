@@ -13,9 +13,9 @@ import java.text.SimpleDateFormat;
 
 
 @Component
-public class ScheduledLog {
+public class ScheduledPrayTime {
 
-    private static final Logger log = LoggerFactory.getLogger(ScheduledLog.class);
+    private static final Logger log = LoggerFactory.getLogger(ScheduledPrayTime.class);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Autowired
