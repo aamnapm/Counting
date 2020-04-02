@@ -4,6 +4,7 @@ import com.aamnapm.counting.dto.RecordDTO;
 import com.aamnapm.counting.dto.ResponseApi;
 import com.aamnapm.counting.mapper.RecordMapper;
 import com.aamnapm.counting.service.RecordService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@Api(value = "Record Controller")
 @RequestMapping("/record")
 public class RecordController {
 

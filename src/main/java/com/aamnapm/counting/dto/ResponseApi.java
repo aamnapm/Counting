@@ -1,7 +1,5 @@
 package com.aamnapm.counting.dto;
 
-import org.json.JSONObject;
-
 import java.util.UUID;
 
 public class ResponseApi {

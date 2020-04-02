@@ -2,8 +2,10 @@ package com.aamnapm.counting.controller;
 
 import com.aamnapm.counting.dto.ProfileDTO;
 import com.aamnapm.counting.dto.ResponseApi;
+import com.aamnapm.counting.feign.AvinyApi;
 import com.aamnapm.counting.mapper.ProfileMapper;
 import com.aamnapm.counting.service.ProfileService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,15 @@ import java.util.UUID;
 
 
 @RestController
+@Api(value = "Profile Controller")
 @RequestMapping("/profile")
 public class ProfileController {
 
+//    @Autowired
+//    AvinyApi avinyApi;
     private ProfileMapper profileMapper;
     private ProfileService profileService;
+
 
     @Autowired
     public ProfileController(ProfileMapper profileMapper, ProfileService profileService) {
@@ -30,6 +36,11 @@ public class ProfileController {
 
     @GetMapping
     ResponseEntity<List<ProfileDTO>> getAll() {
+//        try {
+//            System.out.println(avinyApi.getPrayTime().getSunrise());
+//        } catch (Exception e) {
+//            System.out.println("==> " + e.getMessage());
+//        }
         List<ProfileDTO> profileDTOList = profileMapper.toProfilesDTO(profileService.getAll());
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(profileDTOList);
     }

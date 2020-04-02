@@ -14,3 +14,28 @@
 **/*.log
 /logs/**
 .DS_Store
+
+# directories
+.settings/
+.target/
+.idea/
+.worksheet/
+bin/
+build/
+dist/
+logs/
+node_modules/
+out/
+target/
+tmp/
+
+# files
+*/.DS_Store
+\#*
+.cache
+.classpath
+.history
+.idea
+.idea_modules
+.project
+RUNNING_PID
