@@ -8,3 +8,5 @@
 - OneToMany
 - ExceptionHandling
 - Schedule
+- Log
+- Feign
