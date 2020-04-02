@@ -22,8 +22,7 @@ import java.util.UUID;
 @RequestMapping("/profile")
 public class ProfileController {
 
-//    @Autowired
-//    AvinyApi avinyApi;
+
     private ProfileMapper profileMapper;
     private ProfileService profileService;
 
@@ -36,11 +35,6 @@ public class ProfileController {
 
     @GetMapping
     ResponseEntity<List<ProfileDTO>> getAll() {
-//        try {
-//            System.out.println(avinyApi.getPrayTime().getSunrise());
-//        } catch (Exception e) {
-//            System.out.println("==> " + e.getMessage());
-//        }
         List<ProfileDTO> profileDTOList = profileMapper.toProfilesDTO(profileService.getAll());
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(profileDTOList);
     }
