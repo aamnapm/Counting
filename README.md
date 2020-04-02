@@ -10,3 +10,4 @@
 - Schedule
 - Log
 - Feign
+- AdminServer
