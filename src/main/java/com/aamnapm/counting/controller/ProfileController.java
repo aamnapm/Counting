@@ -2,7 +2,6 @@ package com.aamnapm.counting.controller;
 
 import com.aamnapm.counting.dto.ProfileDTO;
 import com.aamnapm.counting.dto.ResponseApi;
-import com.aamnapm.counting.feign.AvinyApi;
 import com.aamnapm.counting.mapper.ProfileMapper;
 import com.aamnapm.counting.service.ProfileService;
 import io.swagger.annotations.Api;
@@ -36,7 +35,7 @@ public class ProfileController {
     @GetMapping
     ResponseEntity<List<ProfileDTO>> getAll() {
         List<ProfileDTO> profileDTOList = profileMapper.toProfilesDTO(profileService.getAll());
-        return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(profileDTOList);
+        return ResponseEntity.status(HttpURLConnection.HTTP_OK).body(profileDTOList);
     }
 
     @GetMapping("/{id}")
@@ -63,4 +62,13 @@ public class ProfileController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @GetMapping("/")
+    ResponseEntity<List<ProfileDTO>> getAll(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "family", required = false) String family,
+            @RequestParam(value = "nationalCode", required = false) String nationalCode,
+            @RequestParam(value = "age", required = false, defaultValue = "-1") int age) {
+        List<ProfileDTO> profileDTOList = profileMapper.toProfilesDTO(profileService.getAll(name, age, family, nationalCode));
+        return ResponseEntity.status(HttpURLConnection.HTTP_OK).body(profileDTOList);
+    }
 }

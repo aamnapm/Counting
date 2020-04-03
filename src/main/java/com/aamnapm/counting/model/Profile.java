@@ -1,6 +1,9 @@
 package com.aamnapm.counting.model;
 
 
+import net.logstash.logback.encoder.org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import net.logstash.logback.encoder.org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
@@ -25,7 +28,7 @@ public class Profile extends BaseEntity {
     @NotEmpty(message = "nationalCode must be required and unique")
     private String nationalCode;
 
-    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Record> records;
 
     public int getAge() {
@@ -66,5 +69,10 @@ public class Profile extends BaseEntity {
 
     public void setRecords(Set<Record> records) {
         this.records = records;
+    }
+
+    @Override
+    public String toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).toString();
     }
 }

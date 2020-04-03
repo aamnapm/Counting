@@ -5,9 +5,8 @@
 
 - [Initialize Project](https://github.com/aamnapm/Counting/wiki/Initialize-Project) (create project and add database)
 - [Swagger](https://github.com/aamnapm/Counting/wiki/Config-Swagger)
-- DTO 
+- [DTO]() 
 - Mapstruct 
-- Swagger
 - PostgreSQL
 - OneToMany
 - ExceptionHandling

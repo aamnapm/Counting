@@ -23,8 +23,8 @@ public class ScheduledPrayTime {
     @Autowired
     PrayTimeService prayTimeService;
 
-    //    @Scheduled(fixedRate = 216000000)//day
-    @Scheduled(fixedRate = 6000)//min
+        @Scheduled(fixedRate = 216000000)//day
+//    @Scheduled(fixedRate = 6000)//min
     public void reportCurrentTime() {
         PrayTime prayTime = avinyApi.getPrayTime();
 

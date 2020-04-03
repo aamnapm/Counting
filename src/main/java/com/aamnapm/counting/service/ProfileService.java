@@ -17,6 +17,8 @@ public interface ProfileService {
 
     List<Profile> getAll();
 
+    List<Profile> getAll(String name, int age, String family, String nationalCode);
+
     Profile get(UUID uuid);
 
 }

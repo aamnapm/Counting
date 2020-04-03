@@ -5,10 +5,14 @@ import com.aamnapm.counting.exeption.ConflictException;
 import com.aamnapm.counting.exeption.NotFoundException;
 import com.aamnapm.counting.exeption.RunTimeException;
 import com.aamnapm.counting.model.Profile;
+import com.aamnapm.counting.model.Profile_;
 import com.aamnapm.counting.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,11 +29,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public ResponseApi save(Profile profile) {
-        Optional<Profile> byNationalCode = profileRepository.findByName(profile.getNationalCode());
+        Optional<Profile> byNationalCode = profileRepository.findByNationalCode(profile.getNationalCode());
 
-        if (byNationalCode.isPresent()) {
-            throw new ConflictException("User already exist");
-        } else {
+        if (!byNationalCode.isPresent()) {
             try {
                 Profile profileSaved = profileRepository.save(profile);
                 ResponseApi responseApi = new ResponseApi();
@@ -40,6 +42,8 @@ public class ProfileServiceImpl implements ProfileService {
             } catch (Exception e) {
                 throw new RunTimeException(e.getMessage());
             }
+        } else {
+            throw new ConflictException("User already exist");
         }
     }
 
@@ -77,6 +81,30 @@ public class ProfileServiceImpl implements ProfileService {
     public List<Profile> getAll() {
         try {
             return profileRepository.findAll();
+        } catch (Exception e) {
+            throw new RunTimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Profile> getAll(String name, int age, String family, String nationalCode) {
+
+        List<Predicate> profileList = new ArrayList<>();
+        try {
+            Specification<Profile> result = (Specification<Profile>) (root, query, criteriaBuilder) -> {
+                if (name != null)
+                    profileList.add(criteriaBuilder.equal(root.get(Profile_.name), name));
+                if (age != -1)
+                    profileList.add(criteriaBuilder.equal(root.get(Profile_.age), age));
+                if (family != null)
+                    profileList.add(criteriaBuilder.equal(root.get(Profile_.family), family));
+                if (nationalCode != null)
+                    profileList.add(criteriaBuilder.equal(root.get(Profile_.nationalCode), nationalCode));
+                return criteriaBuilder.and(profileList.toArray(new Predicate[0]));
+            };
+
+            return profileRepository.findAll(result);
+
         } catch (Exception e) {
             throw new RunTimeException(e.getMessage());
         }
