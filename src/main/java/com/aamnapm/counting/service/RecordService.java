@@ -18,6 +18,8 @@ public interface RecordService {
 
     List<Record> getAll();
 
+    List<Record> getAll(int type, String title, String price);
+
     Record get(UUID uuid);
 
     Set<Record> getRecords(UUID uuid);

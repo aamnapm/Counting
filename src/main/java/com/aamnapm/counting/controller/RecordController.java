@@ -66,4 +66,13 @@ public class RecordController {
     }
 
 
+    @GetMapping("/")
+    ResponseEntity<List<RecordDTO>> getAll(
+            @RequestParam(value = "type", required = false, defaultValue = "-1") int type,
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "price", required = false) String price) {
+        List<RecordDTO> profileDTOList = recordMapper.toRecordsDTO(recordService.getAll(type, title, price));
+        return ResponseEntity.status(HttpURLConnection.HTTP_OK).body(profileDTOList);
+    }
+
 }

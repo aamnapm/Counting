@@ -5,15 +5,15 @@ import com.aamnapm.counting.exeption.NotFoundException;
 import com.aamnapm.counting.exeption.RunTimeException;
 import com.aamnapm.counting.model.Profile;
 import com.aamnapm.counting.model.Record;
+import com.aamnapm.counting.model.Record_;
 import com.aamnapm.counting.repository.ProfileRepository;
 import com.aamnapm.counting.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import javax.persistence.criteria.Predicate;
+import java.util.*;
 
 @Service
 public class RecordServiceImpl implements RecordService {
@@ -86,6 +86,31 @@ public class RecordServiceImpl implements RecordService {
     public List<Record> getAll() {
         try {
             return recordRepository.findAll();
+        } catch (Exception e) {
+            throw new RunTimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Record> getAll(int type, String title, String price) {
+
+        List<Predicate> predicateList = new ArrayList<>();
+
+        Optional<Profile> byId = profileRepository.findById(UUID.fromString("f9096912-5531-49c3-b259-c229a3019640"));
+
+        try {
+            Specification<Record> recordSpecification = (Specification<Record>) (root, query, criteriaBuilder) -> {
+
+                if (type != -1)
+                    predicateList.add(criteriaBuilder.equal(root.get(Record_.type), type));
+                if (title != null)
+                    predicateList.add(criteriaBuilder.equal(root.get(Record_.title), title));
+                if (price != null)
+                    predicateList.add(criteriaBuilder.equal(root.get(Record_.price), price));
+                return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
+            };
+
+            return recordRepository.findAll(recordSpecification);
         } catch (Exception e) {
             throw new RunTimeException(e.getMessage());
         }
