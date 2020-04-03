@@ -96,8 +96,6 @@ public class RecordServiceImpl implements RecordService {
 
         List<Predicate> predicateList = new ArrayList<>();
 
-        Optional<Profile> byId = profileRepository.findById(UUID.fromString("f9096912-5531-49c3-b259-c229a3019640"));
-
         try {
             Specification<Record> recordSpecification = (Specification<Record>) (root, query, criteriaBuilder) -> {
 
