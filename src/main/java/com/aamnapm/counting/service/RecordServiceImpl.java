@@ -5,7 +5,7 @@ import com.aamnapm.counting.exeption.NotFoundException;
 import com.aamnapm.counting.exeption.RunTimeException;
 import com.aamnapm.counting.model.Profile;
 import com.aamnapm.counting.model.Record;
-import com.aamnapm.counting.model.Record_;
+//import com.aamnapm.counting.model.Record_;
 import com.aamnapm.counting.repository.ProfileRepository;
 import com.aamnapm.counting.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,12 +99,12 @@ public class RecordServiceImpl implements RecordService {
         try {
             Specification<Record> recordSpecification = (Specification<Record>) (root, query, criteriaBuilder) -> {
 
-                if (type != -1)
-                    predicateList.add(criteriaBuilder.equal(root.get(Record_.type), type));
-                if (title != null)
-                    predicateList.add(criteriaBuilder.equal(root.get(Record_.title), title));
-                if (price != null)
-                    predicateList.add(criteriaBuilder.equal(root.get(Record_.price), price));
+//                if (type != -1)
+//                    predicateList.add(criteriaBuilder.equal(root.get(Record_.type), type));
+//                if (title != null)
+//                    predicateList.add(criteriaBuilder.equal(root.get(Record_.title), title));
+//                if (price != null)
+//                    predicateList.add(criteriaBuilder.equal(root.get(Record_.price), price));
                 return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
             };
 

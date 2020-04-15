@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @Api(value = "Record Controller")
 @RequestMapping("/record")
@@ -47,8 +48,8 @@ public class RecordController {
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(recordDTO);
     }
 
-    @PostMapping()
-    ResponseEntity<ResponseApi> save(@RequestBody @Valid RecordDTO recordDTO, @RequestHeader("profileId") UUID id) {
+    @PostMapping("/{profileId}")
+    ResponseEntity<ResponseApi> save(@RequestBody @Valid RecordDTO recordDTO, @PathVariable("profileId") UUID id) {
         ResponseApi responseApi = recordService.save(recordMapper.convertToRecord(recordDTO), id);
         return ResponseEntity.status(HttpURLConnection.HTTP_CREATED).body(responseApi);
     }

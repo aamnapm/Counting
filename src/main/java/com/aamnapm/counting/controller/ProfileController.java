@@ -15,7 +15,7 @@ import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.UUID;
 
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @Api(value = "Profile Controller")
 @RequestMapping("/profile")
@@ -69,6 +69,12 @@ public class ProfileController {
             @RequestParam(value = "nationalCode", required = false) String nationalCode,
             @RequestParam(value = "age", required = false, defaultValue = "-1") int age) {
         List<ProfileDTO> profileDTOList = profileMapper.toProfilesDTO(profileService.getAll(name, age, family, nationalCode));
+        return ResponseEntity.status(HttpURLConnection.HTTP_OK).body(profileDTOList);
+    }
+
+    @GetMapping("/getReport")
+    ResponseEntity<String> getReport() {
+        String profileDTOList = profileService.getReport();
         return ResponseEntity.status(HttpURLConnection.HTTP_OK).body(profileDTOList);
     }
 }

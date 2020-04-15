@@ -21,4 +21,6 @@ public interface ProfileService {
 
     Profile get(UUID uuid);
 
+    String getReport();
+
 }
