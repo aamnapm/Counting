@@ -6,6 +6,7 @@ import com.aamnapm.counting.service.PrayTimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,7 @@ public class ScheduledPrayTime {
     @Autowired
     PrayTimeService prayTimeService;
 
+    @Async
         @Scheduled(fixedRate = 216000000)//day
 //    @Scheduled(fixedRate = 6000)//min
     public void reportCurrentTime() {

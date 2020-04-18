@@ -5,7 +5,6 @@ import com.aamnapm.counting.exeption.ConflictException;
 import com.aamnapm.counting.exeption.NotFoundException;
 import com.aamnapm.counting.exeption.RunTimeException;
 import com.aamnapm.counting.model.Profile;
-//import com.aamnapm.counting.model.Profile_;
 import com.aamnapm.counting.repository.ProfileRepository;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -15,6 +14,7 @@ import net.sf.jasperreports.export.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -23,19 +23,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+
+//import com.aamnapm.counting.model.Profile_;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
     private ProfileRepository profileRepository;
+    @Value("/Users/reza/Desktop/aliProject/springboot/counting/src/main/java/com")
+    private String reportPath;
 
     @Autowired
     public ProfileServiceImpl(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
-
-    @Value("/Users/reza/Desktop/aliProject/springboot/counting/src/main/java/com")
-    private String reportPath;
 
     @Override
     public ResponseApi save(Profile profile) {
@@ -131,9 +133,11 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
+
+    @Async
     @Override
-    public String getReport() {
-        List<Profile> profileList=new ArrayList<>();
+    public CompletableFuture<String> getReport() {
+        List<Profile> profileList = new ArrayList<>();
         profileRepository.findAll().stream().forEach(e -> profileList.add(e));
 
         try {
@@ -177,10 +181,10 @@ public class ProfileServiceImpl implements ProfileService {
 
             csv(jasperPrint);
 
-            return "Report successfully generated @path= " + reportPath;
+            return CompletableFuture.completedFuture("Report successfully generated @path= " + reportPath);
 
         } catch (Exception e) {
-            return e.getMessage();
+            return CompletableFuture.completedFuture(e.getMessage());
         }
     }
 

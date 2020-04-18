@@ -14,6 +14,8 @@ import javax.validation.Valid;
 import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -73,8 +75,8 @@ public class ProfileController {
     }
 
     @GetMapping("/getReport")
-    ResponseEntity<String> getReport() {
-        String profileDTOList = profileService.getReport();
+    ResponseEntity<CompletableFuture<String>> getReport() {
+        CompletableFuture<String> profileDTOList = profileService.getReport();
         return ResponseEntity.status(HttpURLConnection.HTTP_OK).body(profileDTOList);
     }
 }

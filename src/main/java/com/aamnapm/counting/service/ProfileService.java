@@ -6,6 +6,8 @@ import com.aamnapm.counting.model.Profile;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 public interface ProfileService {
 
@@ -21,6 +23,6 @@ public interface ProfileService {
 
     Profile get(UUID uuid);
 
-    String getReport();
+    CompletableFuture<String> getReport();
 
 }
