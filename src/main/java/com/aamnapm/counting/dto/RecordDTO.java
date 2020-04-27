@@ -1,9 +1,13 @@
 package com.aamnapm.counting.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Setter
+@Getter
 public class RecordDTO {
 
     @ApiModelProperty(required = false, hidden = true)
@@ -21,43 +25,4 @@ public class RecordDTO {
     @ApiModelProperty(required = false, hidden = false)
     private String price;
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public UUID getProfileId() {
-        return profileId;
-    }
-
-    public void setProfileId(UUID profileId) {
-        this.profileId = profileId;
-    }
 }
